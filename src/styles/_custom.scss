@@ -1,0 +1,6 @@
+.red-button {
+  @extend .btn;
+
+  color: white;
+  border: darkgray 2px solid;
+}
