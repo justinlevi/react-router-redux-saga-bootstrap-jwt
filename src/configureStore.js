@@ -3,35 +3,30 @@ import createSagaMiddleWare from 'redux-saga';
 import promise from 'redux-promise';
 import { routerMiddleware } from 'react-router-redux';
 
+import rootSaga from "./rootSaga";
 import rootReducer from './rootReducer';
 
 
-export default function configureStore(initialState, history) {
-  const sagaMiddleWare = createSagaMiddleWare();
+const configureStore = (initialState, history) => {
+  const sagaMiddleware = createSagaMiddleWare();
   const routerMW = routerMiddleware(history);
-  const middleWares = [
+  const middlewares = [
     routerMW,
     promise,
-    sagaMiddleWare,
+    sagaMiddleware,
   ];
-
-  const enhancers = [
-    applyMiddleware(...middleWares)
-  ];
-
-  const composeEnhancers =
-    process.env.NODE_ENV !== 'production' &&
-      typeof window === 'object' &&
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
-
   const store = createStore(
     rootReducer,
     initialState,
-    composeEnhancers(...enhancers),
+    compose(
+      applyMiddleware(...middlewares),
+      window.devToolsExtension ? window.devToolsExtension() : f => f
+    )
   );
 
-  store.runSaga = sagaMiddleWare.run;
+  sagaMiddleware.run(rootSaga);
 
   return store;
-}
+};
+
+export default configureStore;

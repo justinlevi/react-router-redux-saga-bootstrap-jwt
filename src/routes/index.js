@@ -1,19 +1,27 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Navbar from '../components/HeaderNav';
+import About from '../pages/About';
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+import Logout from '../pages/Logout';
 
-import About from '../pages/about';
-import Home from '../pages/home';
+const ConnectedSwitch = connect(state => ({
+  location: state.router.location
+}))(Switch);
 
-export const Routes = () => (
+export const Routes = ({ location }) => (
   <div>
     <div className="container">
       <div className="row">
-        <Switch>
+        <ConnectedSwitch>
           <Route path="/" exact={true} component={Home} />
           <Route path="/about" component={About} />
-        </Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
+        </ConnectedSwitch>
       </div>
     </div>
   </div>

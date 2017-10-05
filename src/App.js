@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
-import { Provider } from 'react-redux';
-import { Route } from 'react-router';
+import { connect, Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter } from 'react-router-redux';
 
 import configureStore from './configureStore';
-// import rootSaga from './rootSaga';
 
 import Navbar from './components/HeaderNav';
 

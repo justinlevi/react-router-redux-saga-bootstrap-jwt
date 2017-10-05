@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { bindActionCreators, Dispatch } from 'redux';
-
 import NavItem from '../RouterNavItem';
+import { LinkContainer } from 'react-router-bootstrap'
 
-export const HeaderNav = ({ idToken, handleLogin = (() => { }), handleLogout = (() => { }) }) => {
-
+export const HeaderNav = ({ jwtToken }) => {
   return (
     <Navbar fluid={true}>
       <Navbar.Header>
@@ -16,30 +13,31 @@ export const HeaderNav = ({ idToken, handleLogin = (() => { }), handleLogout = (
         </Navbar.Brand> */}
         <Navbar.Toggle />
         <Nav>
-          <NavItem href="/">HOME</NavItem>
-          <NavItem href="/about">ABOUT</NavItem>
+          <LinkContainer to="/">
+            <NavItem>HOME</NavItem>
+          </LinkContainer>
+          <LinkContainer to="/about">
+            <NavItem>ABOUT</NavItem>
+          </LinkContainer>
         </Nav>
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav pullRight={true} >
-          <NavItem href="#login" onClick={idToken ? handleLogout : handleLogin}>
-            <div className="login-logout">{idToken ? 'LOGOUT' : 'LOGIN'}</div>
-          </NavItem>
+          <LinkContainer to={jwtToken ? '/logout' : '/login'}>
+            <NavItem>
+              <div className="login-logout">{jwtToken ? 'LOGOUT' : 'LOGIN'}</div>
+            </NavItem>
+          </LinkContainer>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
 };
 
-// export default Navbar;
-
 const mapStateToProps = (state, ownProps) => ({
-  // idToken: state.auth.idToken,
+  jwtToken: state.auth.jwtToken,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   handleLogin: bindActionCreators(loginRequest, dispatch),
-//   handleLogout: bindActionCreators(logout, dispatch),
-// });
-
-export default connect(mapStateToProps, {})(HeaderNav);
+export default connect(mapStateToProps, null, null, {
+  pure: false
+})(HeaderNav);
