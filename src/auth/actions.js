@@ -1,10 +1,7 @@
-import { 
-  createConstants, 
-  checkHttpStatus, 
-  parseJSON 
-} from '../utils';
-import jwtDecode from 'jwt-decode';
-// import { push } from 'react-router-redux';
+import { createConstants } from '../utils';
+import { api } from  '../api/api';
+
+// import jwtDecode from 'jwt-decode';
 
 // ---------------
 // Actions
@@ -41,14 +38,6 @@ export const loginFailure = (error) => ({
 export const logout = () => ({
   type: Actions.LOGOUT,
 });
-
-
-export function api(ourFetch) {
-  return ourFetch
-  .then(resp => { return checkHttpStatus(resp)})
-  .then(resp => { return parseJSON(resp)})
-  .catch(error => {console.log(error)});
-}
 
 
 export function loginUser(username, password, csrfToken, redirect = "/") {

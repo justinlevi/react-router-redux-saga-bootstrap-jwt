@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { NavItem } from 'react-bootstrap';
 import { Route } from 'react-router-dom';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
+// import { push } from 'react-router-redux';
+// import { connect } from 'react-redux';
 
 export const RouteNavItem = (props, state) => {
 

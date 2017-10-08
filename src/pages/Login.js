@@ -60,6 +60,14 @@ export class LoginView extends React.Component {
       return <Redirect to="/" />;
     }
 
+    if (isLoggingIn) {
+      return <div>Logging in...</div>
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>
+    }
+
     return (
       <div className='col-xs-12 col-md-6 col-md-offset-3'>
         <h3>Log in to view protected content!</h3>

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-
-import { connect, Provider } from 'react-redux';
+// import { connect, Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter } from 'react-router-redux';
+import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
 
+import { Routes } from './routes';
 import configureStore from './configureStore';
-
 import Navbar from './components/HeaderNav';
 
 import './index.css';
@@ -14,7 +14,13 @@ import './styles/index.css';
 
 import logo from './logo.svg';
 
-import { Routes } from './routes';
+const networkInterface = createNetworkInterface({
+  uri: 'http://blt.dev/graphql'
+});
+
+const client = new ApolloClient({
+  networkInterface: networkInterface
+});
 
 const initialState = {};
 const history = createHistory();
@@ -24,7 +30,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store} >
+      <ApolloProvider client={client} store={store}>
         <ConnectedRouter history={history}>
           <div>
             <div className="App-header">
@@ -34,7 +40,7 @@ class App extends Component {
             <Routes />
           </div>
         </ConnectedRouter>
-      </Provider>
+      </ApolloProvider>
     );
   }
 }

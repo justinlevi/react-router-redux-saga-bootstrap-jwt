@@ -1,7 +1,22 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom'
 
 class Home extends React.Component {
+
   render() {
+
+    console.log(this.props);
+
+    const {data} = this.props;
+
+    if (data.networkStatus === 1) {
+      return <div >Loading...</div>;
+    }
+
+    if (data.error) {
+      return <div>Error! {data.error.message}</div>;
+    }
+
     return (
       <div className="App">
         <div className="container">
@@ -16,6 +31,18 @@ class Home extends React.Component {
               </p>
             </div>
           </div>
+
+          <div className="row">
+            <h1 className="display-3">Recent Posts</h1>
+            {data.nodeQuery.entities.map(node => 
+              <li key={node.entityId}>
+                <Link to={node.url.alias}>
+                  {node.title}
+                </Link>
+            </li>
+            )}
+          </div>
+
         </div>
       </div>
     );

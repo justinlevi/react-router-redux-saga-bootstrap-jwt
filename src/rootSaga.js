@@ -20,7 +20,6 @@ export const getCsrfTokenFromState = (state) => state.globalState.csrfToken
 function *getCsrfToken() {
 
   const token = yield select(getCsrfTokenFromState);
-  console.log(token);
   if(token === null) {
     let response = yield call(fetch, 'http://blt.dev/session/token', { method: 'GET' });
     
